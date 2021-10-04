@@ -1,1 +1,4 @@
-# oracle4thoct2021
+# Plan 
+
+<img src="plan.png">
+
