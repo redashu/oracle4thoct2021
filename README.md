@@ -225,6 +225,114 @@ ad5ff7a04b89
 
 ```
 
+### docker image build 
+
+<img src="build.png">
+
+### building first docker image for python code
+
+```
+[ashu@ip-172-31-18-96 pythonapp]$ docker  build  -t  ashupython:v1   . 
+Sending build context to Docker daemon  3.584kB
+Step 1/6 : FROM python
+ ---> 6beb0d435def
+Step 2/6 : LABEL name=ashutoshh
+ ---> Running in 6e5090dcfbd2
+Removing intermediate container 6e5090dcfbd2
+ ---> 928fb3e9ac68
+Step 3/6 : LABEL email=ashutoshh@linux.com
+ ---> Running in 983737aabdbc
+Removing intermediate container 983737aabdbc
+ ---> 18e35247dd96
+Step 4/6 : RUN  mkdir  /mycode
+ ---> Running in 4c935e18eca9
+Removing intermediate container 4c935e18eca9
+ ---> 5ebea5f79457
+Step 5/6 : COPY  hello.py  /mycode/hel
+
+```
+
+### creating first container from the image
+
+```
+[ashu@ip-172-31-18-96 pythonapp]$ docker  run -itd  --name ashupyc111 ashupython:v1
+66c56abb622276aa3130e3a15ad5a64070454ebf47658a67201dd4d1537bf54c
+[ashu@ip-172-31-18-96 pythonapp]$ docker  ps
+CONTAINER ID   IMAGE           COMMAND                  CREATED          STATUS          PORTS     NAMES
+66c56abb6222   ashupython:v1   "python /mycode/hell…"   3 seconds ago    Up 2 seconds              ashupyc111
+0133ec510db5   lohmitta:v1     "python /mycode/hell…"   30 seconds ago   Up 29 seconds             lohitC3
+3a7724d10c9a   sidpython:v1    "python /shellcode/h…"   32 seconds ago   Up 32 seconds             sidpyc1
+
+```
+
+### checking output of python code running in a container 
+
+```
+docker  logs  -f  ashupyc111
+```
+
+### Resource consumption by python code container 
+
+```
+[ashu@ip-172-31-18-96 pythonapp]$ docker  stats ashupyc111 
+
+
+CONTAINER ID   NAME         CPU %     MEM USAGE / LIMIT    MEM %     NET I/O     BLOCK I/O     PIDS
+66c56abb6222   ashupyc111   0.00%     5.148MiB / 7.69GiB   0.07%     850B / 0B   0B / 17.9kB   1
+
+
+78  docker  stats ashupyc111 
+   79  docker  stats 
+
+```
+
+
+### forcefully stop all the containers 
+
+```
+[ashu@ip-172-31-18-96 pythonapp]$ docker  ps  -q
+946be0a1e421
+0144efdc5e29
+524d6775c1db
+6dbfdf08ff6a
+2385999c20c4
+02ed1f50163e
+fbac2b7fb524
+543c273d3d0f
+c78d3727acf0
+3a7724d10c9a
+[ashu@ip-172-31-18-96 pythonapp]$ docker  kill  $(docker  ps  -q)
+946be0a1e421
+0144efdc5e29
+524d6775c1db
+2385999c20c4
+02ed1f50163e
+fbac2b7fb524
+543c273d3d0f
+c78d3727acf0
+3a7724d10c9a
+
+```
+
+### more usefull commands
+
+```
+ 92  docker  start $(docker  ps  -aq)
+   93  docker  ps
+   94  docker  kill  $(docker  ps  -q)
+   95  docker  rm   $(docker  ps  -aq)
+   
+```
+
+### docker build command 
+
+```
+docker  build -t  ashupython:v2  -f olpython.dockerfile   . 
+
+```
+
+
+
 
 
 
