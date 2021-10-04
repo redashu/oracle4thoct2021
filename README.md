@@ -204,6 +204,27 @@ dev    home   media  opt    root   sbin   sys    usr
 
 ```
 
+### remove all the. containers
+
+```
+[ashu@ip-172-31-18-96 ~]$ docker  rm $(docker ps -aq) -f
+c42625077265
+f080192eb512
+e3e240a1da93
+8af20cbda80d
+2496763181a6
+8eeb3326c27f
+d9d93ad7ec5e
+2a2f8dbdd62e
+d9c835731b9c
+852085bf7937
+ed7ff936446e
+7542a8d85ce0
+4a471d2277b8
+ad5ff7a04b89
+
+```
+
 
 
 
