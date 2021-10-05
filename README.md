@@ -196,6 +196,12 @@ d7bc030623f5   alpine       "ping fb.com"            3 minutes ago        Up 3 m
   
 ```
 
+### webapp containerization 
+
+### app server / web server engines
+
+<img src="apps.png">
+
 
 
 
