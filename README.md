@@ -179,6 +179,23 @@ d7bc030623f5   alpine       "ping fb.com"            3 minutes ago        Up 3 m
 
 
 
+### Cgroup and restart policy update
+
+```
+183  docker run  -itd  --name  ashutoshhcg1 --cpu-shares=30  busybox ping localhost 
+  184  docker  ps
+  185  history 
+  186  docker update  ashutoshhcg1  --memory 300m 
+  187  docker update  --help
+  188  docker update  ashutoshhcg1  --memory 300m  --memory-swap 300m 
+  189  docker  stats
+  190  history 
+  191  docker  inspect  ashutoshhcg1
+  192  history 
+  193  docker update  ashutoshhcg1  --restart always
+  
+```
+
 
 
 
