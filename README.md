@@ -202,6 +202,99 @@ d7bc030623f5   alpine       "ping fb.com"            3 minutes ago        Up 3 m
 
 <img src="apps.png">
 
+### webapp containerization 
+
+<img src="nginx.png">
+
+### cleaning up all the containers and images
+
+```
+196  docker  rm  $(docker  ps -aq) -f
+  197  docker  rmi $(docker  images -q) -f
+  
+```
+
+###  cloning sample app of html / css /js
+
+```
+git clone  https://github.com/schoolofdevops/html-sample-app
+
+```
+
+### building docker images
+
+```
+[ashu@ip-172-31-18-96 myimages]$ cd  html-sample-app/
+[ashu@ip-172-31-18-96 html-sample-app]$ ls
+assets  Dockerfile  elements.html  generic.html  html5up-phantom.zip  images  index.html  LICENSE.txt  README.txt
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  build  -t  nginx:ashuapp1  . 
+Sending build context to Docker daemon  2.099MB
+Step 1/4 : FROM nginx
+latest: Pulling from library/nginx
+07aded7c29c6: Pull complete 
+bbe0b7acc89c: Pull complete 
+44ac32b0bba8: Pull complete 
+91d6e3e593db: Pull complete 
+8700267f2376: Pull complete 
+4ce73aa6e9b0: Pull complete 
+Digest: sha256:765e51caa9e739220d59c7f7a75508e77361b441dccf128483b7f5cce8306652
+Status: Downloaded newer image for nginx:latest
+ ---> f8f4ffc8092c
+Step 2/4 : LABEL name="ashutoshh"
+ ---> Running in dee4d3bedcac
+Removing intermediate container dee4d3bedcac
+ ---> 2f17671b2948
+Step 3/4 : COPY . /usr/share/nginx/html/
+ ---> 5d3974a569fa
+Step 4/4 : EXPOSE 80
+ ---> Running in 07c241bcc1fe
+Removing intermediate container 07c241bcc1fe
+ ---> 0c115a9924ec
+Successfully built 0c115a9924ec
+Successfully tagged nginx:ashuapp1
+
+```
+
+### we can check build history 
+
+```
+[ashu@ip-172-31-18-96 html-sample-app]$ docker history  nginx:ashuapp1  
+IMAGE          CREATED         CREATED BY                                      SIZE      COMMENT
+0c115a9924ec   2 minutes ago   /bin/sh -c #(nop)  EXPOSE 80                    0B        
+5d3974a569fa   2 minutes ago   /bin/sh -c #(nop) COPY dir:db1abaf7b384b0a81…   2.05MB    
+2f17671b2948   2 minutes ago   /bin/sh -c #(nop)  LABEL name=ashutoshh         0B        
+f8f4ffc8092c   7 da
+
+```
+
+### pushing imaget to docker hub 
+
+```
+214  docker  tag   nginx:ashuapp1   dockerashu/nginx:5thoct2021 
+  215  docker login -u dockerashu
+  216  docker  push dockerashu/nginx:5thoct2021
+  217  docker logout 
+  
+```
+
+## COntainer networking 
+
+<img src="contnet.png">
+
+### Container networking model
+
+<img src="cnet11.png">
+
+### Docker networking pic 1
+
+
+<img src="dnet222.png">
+
+### NAT in docker host 
+
+<img src="dnat.png">
+
+
 
 
 
