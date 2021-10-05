@@ -294,6 +294,53 @@ f8f4ffc8092c   7 da
 
 <img src="dnat.png">
 
+### COntainer networking 
+
+```
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+[ashu@ip-172-31-18-96 html-sample-app]$ docker run  -it  --name ashuc1  alpine  
+Unable to find image 'alpine:latest' locally
+latest: Pulling from library/alpine
+a0d0a0d46f8b: Pull complete 
+Digest: sha256:e1c082e3d3c45cccac829840a25941e679c25d438cc8412c2fa221cf1a824e6a
+Status: Downloaded newer image for alpine:latest
+/ # 
+/ # ifconfig 
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02  
+          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:8 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:680 (680.0 B)  TX bytes:0 (0.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+
+```
+
+### Port forwarding and NAT rules
+
+<img src="portf.png">
+
+### launching first continer 
+
+```
+ashu@ip-172-31-18-96 html-sample-app]$ docker run -itd  --name ashungc1 -p  1234:80  dockerashu/nginx:5thoct2021
+14062dd436b946b8532d309035aea9cc887380175b38948fe6714e7b2eaf55fe
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  ps
+CONTAINER ID   IMAGE                         COMMAND                  CREATED         STATUS         PORTS                                   NAMES
+14062dd436b9   dockerashu/nginx:5thoct2021   "/docker-entrypoint.…"   8 seconds ago   Up 7 seconds   0.0.0.0:1234->80/tcp, :::1234->80/tcp   ashungc1
+
+```
+
 
 
 
