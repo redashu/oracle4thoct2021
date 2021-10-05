@@ -149,6 +149,34 @@ fef24ee00d9b: Pushed
 
  ```
       
+### restart policy here
+
+```
+Flag	Description
+no	Do not automatically restart the container. (the default)
+on-failure	Restart the container if it exits due to an error, which manifests as a non-zero exit code.
+always	Always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted. (See the second bullet listed in restart policy details)
+unless-stopped	Similar to always, except that when the container is stopped (manually or otherwise), it is not restarted even after Docker daemon restarts.
+
+
+```
+
+### 
+
+```
+docker  run -itd --name ashuc3 --restart  always  --memory 50m --cpu-shares=40 alpine ping fb.com 
+a422b5f49ecacfbb7d8a2b87bd99136af1a47d2683fa45e99e9c955df6d83cde
+[ashu@ip-172-31-18-96 javacode]$ docker  ps
+CONTAINER ID   IMAGE        COMMAND                  CREATED              STATUS              PORTS     NAMES
+a422b5f49eca   alpine       "ping fb.com"            10 seconds ago       Up 3 seconds                  ashuc3
+c48795cb7968   rajiol8:v1   "/bin/sh -c 'java my…"   12 seconds ago       Up 10 seconds                 rajiol8c1
+62dbc8ec0468   alpine       "ping fb.com"            About a minute ago   Up About a minute             rupajava
+d7bc030623f5   alpine       "ping fb.com"            3 minutes ago        Up 3 minutes                  ashuc2
+69e098a97192   alpine       "/bin/sh"                6 minutes ago        Up 6 minutes                  ashuc1
+[ashu@ip-172-31-18-96 javacode]$ 
+
+```
+
 
 
 
