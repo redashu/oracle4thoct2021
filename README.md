@@ -341,6 +341,118 @@ CONTAINER ID   IMAGE                         COMMAND                  CREATED   
 
 ```
 
+### reason for custom bridge creation 
+
+<img src="br.png">
+
+### default bridges in docker engine 
+
+```
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  network  ls
+NETWORK ID     NAME      DRIVER    SCOPE
+441f361b420a   bridge    bridge    local
+6b9b473c6930   host      host      local
+c6c91397326a   none      null      local
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  network  inspect  bridge
+[
+    {
+        "Name": "bridge",
+        "Id": "441f361b420ade7795f5d7c8257150a321b53dbdda468482c3906ab282461818",
+        "Created": "2021-10-05T03:37:42.953791595Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        
+        
+ ```
+ 
+ 
+ ### creating docker bridge 
+ 
+ ```
+ [ashu@ip-172-31-18-96 html-sample-app]$ docker  network  create  ashubr1
+5c837e04947453f70e45fff74d6b9cac5dfc1989d4d38ac8bb4682c0988ac610
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  network  ls
+NETWORK ID     NAME      DRIVER    SCOPE
+5c837e049474   ashubr1   bridge    local
+441f361b420a   bridge    bridge    local
+6b9b473c6930   host      host      local
+c6c91397326a   none      null      local
+
+```
+
+### checking bridge internal details 
+
+```
+[ashu@ip-172-31-18-96 html-sample-app]$ docker  network  inspect  ashubr1
+[
+    {
+        "Name": "ashubr1",
+        "Id": "5c837e04947453f70e45fff74d6b9cac5dfc1989d4d38ac8bb4682c0988ac610",
+        "Created": "2021-10-05T10:15:33.083845594Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+            
+```
+
+### multiple bridge means network level isolation 
+
+<img src="isolation.png">
+
+### creating container in custom bridge
+
+```
+ docker run -itd  --name ashungc1   --nwork ashubr1 dockerashu/nginx:5thoct2021
+  255   docker run -itd  --name ashungc1   --network ashubr1 dockerashu/nginx:5thoct2021
+  
+```
+
+### docker bridge with custom subnet 
+
+```
+docker  network  create  ashubr2  --subnet  192.168.200.0/24 
+
+ 269  docker  network  create  ashubr2  --subnet  192.168.200.0/24  
+  270  docker run -itd  --name ashuc44   --network ashubr2 oraclelinux:8.4
+  271  docker run -itd  --name ashuc55  --network ashubr2 --ip  192.168.200.100  oraclelinux:8.4
+  
+  [ashu@ip-172-31-18-96 html-sample-app]$ docker  exec -it ashuc44  bash 
+[root@1256765f43e7 /]# ping ashuc55
+PING ashuc55 (192.168.200.100) 56(84) bytes of data.
+64 bytes from ashuc55.ashubr2 (192.168.200.100): icmp_seq=1 ttl=255 time=0.080 ms
+64 bytes from ashuc55.ashubr2 (192.168.200.100): icmp_seq=2 ttl=255 time=0.067 ms
+64 bytes from ashuc55.ashubr2 (192.168.200.100): icmp_seq=3 ttl=255 time=0.068 ms
+64 bytes from ashuc55.ashubr2 (192.168.200.100): icmp_seq=4 ttl=255 time=0.065 ms
+64 bytes from ashuc55.ashubr2 (192.168.200.100): icmp_seq=5 ttl=255 time=0.071 ms
+^C
+--- ashuc55 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4081ms
+rtt min/avg/max/mdev = 0.065/0.070/0.080/0.007 ms
+[root@1256765f43e7 /]# exit
+exit
+  
+```
+
 
 
 
