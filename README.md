@@ -454,6 +454,22 @@ exit
 ```
 
 
+### docker network assignment 
 
+```
+283  docker  network create  ashubrx1 
+  284  docker  network create  ashubrx2 --subnet 192.112.100.0/24 
+  285  docker run -itd --name ashubrc1  --network ashubrx1  alpine 
+  286  docker run -itd --name ashubrc2  --network ashubrx1  alpine 
+  287  docker run -itd --name ashubrc3  --network ashubrx2  alpine 
+  288  docker run -itd --name ashubrc4  --network ashubrx2 --ip  192.112.100.100  alpine 
+  289  docker exec -it  ashubrc4  sh 
+  290  docker exec -it  ashubrc1  sh 
+  291  docker  network connect  ashubrx2  ashubrc1
+  292  docker exec -it  ashubrc1  sh 
+  
+  ```
+  
+  
 
 
