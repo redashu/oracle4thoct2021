@@ -344,3 +344,86 @@ cker  run -itd --name ashuweb -p 2233:80  -v  /home/ashu/myimages/html-sample-ap
 
 <img src="compose.png">
 
+[InstallLInk](https://docs.docker.com/compose/install/)
+
+### Compose file version history 
+
+<img src="composefile.png">
+
+### compose example 1 
+
+```
+version: '3.8' # compose file version 
+services: # to write about container info 
+ ashuapp1: # any name of service 
+  image: alpine 
+  container_name: ashuc1
+  command: ping localhost  
+ 
+
+
+```
+
+### running compose file 
+
+```
+[ashu@ip-172-31-18-96 myimages]$ ls
+ashutoshhcompose  demo  html-sample-app  javacode  pythonapp
+[ashu@ip-172-31-18-96 myimages]$ cd  ashutoshhcompose/
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ ls
+docker-compose.yaml
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ docker-compose up  -d
+Creating network "ashutoshhcompose_default" with the default driver
+Creating ashuc1 ... done
+
+```
+
+### compose operations 
+
+```
+
+88  docker-compose  logs
+  389  docker-compose  logs -f
+  
+```
+
+###
+
+
+```
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ docker-compose  stop
+Stopping ashuc1 ... done
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ docker-compose  ps
+ Name       Command        State     Ports
+------------------------------------------
+ashuc1   ping localhost   Exit 137   
+
+```
+
+### remove everything using compose 
+
+```
+docker-compose  down 
+Removing ashuc1 ... done
+Removing network ashutoshhcompose_default
+
+```
+
+### Example 2 to create two container 
+
+```
+ashu@ip-172-31-18-96 ashutoshhcompose]$ ls
+docker-compose.yaml  example2.yaml
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ docker-compose -f  example2.yaml  up -d
+Creating network "ashutoshhcompose_default" with the default driver
+Creating ashucc33 ... done
+Creating ashucc1  ... done
+[ashu@ip-172-31-18-96 ashutoshhcompose]$ docker-compose -f  example2.yaml   ps
+  Name                Command               State                  Ports                
+----------------------------------------------------------------------------------------
+ashucc1    ping fb.com                      Up                                          
+ashucc33   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:1155->80/tcp,:::1155->80/tcp
+
+```
+
+
