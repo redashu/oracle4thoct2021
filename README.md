@@ -321,3 +321,26 @@ mysql> show  databases;
 
 ```
 
+
+## Docker web UI 
+
+<img src="dockercli.png">
+
+### portainer deployment 
+
+```
+docker  run -tid --name webui -p 9000:9000 -v  /var/run/docker.sock:/var/run/docker.sock portainer/portainer 
+
+```
+
+### volume as docker engine folder 
+
+```
+cker  run -itd --name ashuweb -p 2233:80  -v  /home/ashu/myimages/html-sample-app:/usr/share/nginx/html/:ro --restart  always   nginx  
+
+```
+
+## COmpose by Docker 
+
+<img src="compose.png">
+
