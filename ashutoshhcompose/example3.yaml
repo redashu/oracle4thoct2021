@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+ ashuappx1:
+  image:  ashupython:v1 
+  build: # to trigger build 
+   context: ../pythonapp # location of dockerfile 
+   dockerfile: Dockerfile # name of dockerfile to build 
+  container_name: ashupyc1

@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+ ashuapp1:
+  image: alpine
+  container_name: ashucc1
+  command: ping fb.com 
+ ashuapp2:
+  image: nginx
+  container_name: ashucc33
+  ports: # its port forwarding like docker run -p 1155:80 
+   - 1155:80 
