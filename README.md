@@ -321,7 +321,213 @@ Handling connection for 1122
 ### Nodeport service 
 
 
+### checking label of pods 
+
 ```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  po ashuwebpod1  --show-labels
+NAME          READY   STATUS    RESTARTS   AGE    LABELS
+ashuwebpod1   1/1     Running   0          131m   run=ashuwebpod1
+
+```
+
+#### creating nodeport serfice 
+
+```
+ ✘ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  create   service  nodeport  ashusvc1  --tcp 5544:80  --dry-run=client -o yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashusvc1
+  name: ashusvc1
+spec:
+  ports:
+  - name: 5544-80
+    port: 5544
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ashusvc1
+  type: NodePort
+status:
+  loadBalancer: {}
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  create   service  nodeport  ashusvc1  --tcp 5544:80  --dry-run=client -o yaml  >websvc.yaml
+ 
+ ```
+ 
+ ### check thi 
+ 
+ 
+ ```
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  apply -f  websvc.yaml 
+service/ashusvc1 created
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  svc
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+ashusvc1     NodePort    10.102.194.242   <none>        5544:32519/TCP   6s
+
+```
+
+
+### Deleting svc and pods
+
+```
+fire@ashutoshhs-MacBook-Air  ~  kubectl  delete all --all
+pod "archanapod1" deleted
+pod "ashuwebpod1" deleted
+pod "chandrawebpod1" deleted
+pod "lohitpod3" deleted
+pod "mahewebpod1" deleted
+pod "mohitpod1" deleted
+pod "prashanthwebpod1" deleted
+pod "pripod1" deleted
+pod "rajiwebpod1" deleted
+pod "rchamantpod1" deleted
+pod "rchamantpod2" deleted
+pod "rupapod2" deleted
+pod "shinipod1" deleted
+pod "shiniwebpod1" deleted
+pod "sidwebpod1" deleted
+pod "yagwebpod1" deleted
+service "archanasvc1" deleted
+service "ashusvc1" deleted
+service "chandrac1" deleted
+service "chandrac2" deleted
+
+
+```
+
+###
+
+```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  apply -f  ashufinalapp.yaml 
+pod/ashuwebpod1 created
+service/ashusvc1 created
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  po
+NAME          READY   STATUS    RESTARTS   AGE
+archanapod1   1/1     Running   0          44s
+ashuwebpod1   1/1     Running   0          6s
+mahewebpod1   1/1     Running   0          22s
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  svc
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+archanapod1   NodePort    10.101.180.24   <none>        5544:32117/TCP   48s
+ashusvc1      NodePort    10.104.98.57    <none>        5544:30728/TCP   9s
+kubernetes    ClusterIP   10.96.0.1       <none>        443/TCP          6m19s
+mahesvc1      NodePort    10.99.135.66    <none>        5544:32006/TCP   26s
+ fire@ashutoshhs-MacBook-Air  ~/Desk
+ 
+ ```
+ 
+ 
+ ### java web with tomcat application 
+ 
+ <img src="tomcat.png">
+ 
+ ### BUilding docker images
+ 
+ ```
+ docker  build  -t  dockerashu/tomcat:oracleappv1  https://github.com/redashu/javawebapp.git
+Sending build context to Docker daemon  154.6kB
+Step 1/6 : FROM tomcat
+latest: Pulling from library/tomcat
+df5590a8898b: Already exists 
+705bb4cb554e: Already exists 
+519df5fceacd: Already exists 
+ccc287cbeddc: Already exists 
+39a2961e8351: Pull complete 
+0287b7aa7f62: Pull complete 
+165d4a436d89: Pull complete 
+2b9d00974b45: Pull complete 
+8ec846c322cf: Pull complete 
+1000c7fbcebb: Pull complete 
+Digest: sha256:f3901a8359495b00474bd253cc446971c0277fc394ba37a020f0b9d84080fced
+Status: Downloaded newer image for tomcat:latest
+ ---> 6313f84af805
+Step 2/6 : WORKDIR /usr/local/tomcat/webapps
+ ---> Running in f91cfcc3aa32
+Removing intermediate container f91cfcc3aa32
+ ---> 8571b4a62299
+Step 3/6 : RUN mkdir oracle
+ ---> Running in d9af6c630f39
+Removing intermediate container d9af6c630f39
+ ---> 77f3f22e6098
+Step 4/6 : WORKDIR oracle
+ ---> Running in fab01a35bb04
+Removing intermediate container fab01a35bb04
+ ---> 24bfe3c4c9e1
+Step 5/6 : ADD myapp .
+ ---> efa1654a8d8d
+Step 6/6 : EXPOSE 8080
+ ---> Running in 29b1ac03f4bc
+Removing intermediate container 29b1ac03f4bc
+ ---> 7f5ee9aa5914
+Successfully built 7f5ee9aa5914
+Successfully tagged dockerashu/tomcat:oracleappv1
+
+```
+
+### pushing to docker hub 
+
+```
+[root@ip-172-31-18-96 ~]# docker  login -u dockerashu
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[root@ip-172-31-18-96 ~]# docker push dockerashu/tomcat:oracleappv1
+The push refers to repository [docker.io/dockerashu/tomcat]
+5d731f37c175: Pushed 
+cb22288aff9f: Pushed 
+b76a02ab2a70: Mounted from library/tomcat 
+2dc1aa92b587: Mounted from library/tomcat 
+73819629b437: Layer already exists 
+874ad65f91ea: Layer already exists 
+0fc2498b65e5: Layer already exists 
+d08e6b97bf21: Layer already exists 
+3054497613e6: Layer already exists 
+d35dc7f4c79e: Layer already exists 
+dabfe5b2ea81: Layer already exists 
+5e6a409f30b6: Layer already exists 
+oracleappv1: digest: sha256:df8c099c55a03705473ec6d0ed30852f925ed346fe80504989987c1f84c50292 size: 2838
+[root@ip-172-31-18-96 ~]# docker logout 
+Removing login credentials for https://index.docker.io/v1/
+
+```
+
+### deploy in k8s as pod 
+
+```
+kubectl  run  ashujavaapp --image=dockerashu/tomcat:oracleappv1  --port  8080  --dry-run=client -o yaml
+
+kubectl  create service nodeport ashujvsvc1 --tcp 1245:8080 --dry-run=client -o yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashujvsvc1
+  name: ashujvsvc1
+spec:
+  ports:
+  - name: 1245-8080
+    port: 1245
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: ashujvsvc1
+  type: NodePort
+status:
+  loadBalancer: {}
+  
+  
+```
+  
+  
+  
 
 
 
