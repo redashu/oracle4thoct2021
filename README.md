@@ -23,3 +23,30 @@ minion-node2    Ready    <none>                 25h   v1.22.2
 
 
 
+### sending req to kube-apiserver 
+
+```
+kubectl  cluster-info 
+Kubernetes control plane is running at https://3.230.187.160:6443
+CoreDNS is running at https://3.230.187.160:6443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'
+
+```
+
+### kube-schedular
+
+<img src="sche.png">
+
+### kube schedular algo 
+
+<img src="schealgo.png">
+
+### kube-controller-manager
+
+<img src="kubec.png">
+
+### ETCD 
+
+<img src="etcd.png">
+
