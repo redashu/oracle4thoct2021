@@ -50,3 +50,15 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'
 
 <img src="etcd.png">
 
+
+### kubernetes minion side 
+
+<img src="min.png">
+
+
+### Minion will also have CNI installed to create Bridge and assign IP to containers
+
+<img src="cni.png">
+
+
+
