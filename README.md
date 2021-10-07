@@ -526,6 +526,28 @@ status:
   
 ```
   
+ ## app deployment and access in k8s using pod and nodeport service
+ 
+ <img src="np.png">
+ 
+ ### k8s cluster setup 
+ 
+ <img src="k8set.png">
+ 
+ ### starting minikube cluster 
+ 
+ ```
+ minikube  start                  
+😄  minikube v1.22.0 on Darwin 11.4
+✨  Automatically selected the hyperkit driver
+🎉  minikube 1.23.2 is available! Download it: https://github.com/kubernetes/minikube/releases/tag/v1.23.2
+💡  To disable this notice, run: 'minikube config set WantUpdateNotification false'
+
+💿  Downloading VM boot image ...
+    > minikube-v1.22.0.iso.sha256: 65 B / 65 B [-------------] 100.00% ? p/s 0s
+    > minikube-v1.22.0.iso: 38.87 MiB / 242.95 MiB  16.00% 3.41 MiB p/s ETA 59s
+    
+  ```
   
   
 
