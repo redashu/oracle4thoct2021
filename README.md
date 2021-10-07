@@ -187,6 +187,102 @@ BUG_REPORT_URL="https://bugs.alpinelinux.org/"
  
  ```
  
+ ### deleting all the pods 
  
+ ```
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  delete pods  --all
+pod "archanapod1" deleted
+pod "ashupod1" deleted
+pod "chandrapod1" deleted
+pod "lohitpod1" deleted
+pod "mahepod1" deleted
+pod "mohitpod1" deleted
+pod "prashpod1" deleted
+pod "rajipod1" deleted
+pod "rchamantpod1" deleted
+pod "rupapod1" deleted
+pod "shinipod1" deleted
+pod "sidpod1" deleted
+pod "yagpod1" deleted
 
 
+```
+
+### AUTO generate YAML / JSON file for POD 
+
+
+```
+
+ kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ashupod2
+  name: ashupod2
+spec:
+  containers:
+  - command:
+    - ping
+    - fb.com
+    image: alpine
+    name: ashupod2
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  yaml  >auto.yaml 
+ 
+ ```
+ 
+ ### summary of autogen 
+ 
+ ```
+ 5240  kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  yaml 
+ 5241  kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  yaml  >auto.yaml 
+ 5242  kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  json 
+ 5243  kubectl  run  ashupod2  --image=alpine --command ping fb.com    --dry-run=client  -o  json >auotpod.json 
+ 
+ ```
+ 
+ ###
+ 
+ ```
+ ashupod1.yaml auotpod.json  auto.yaml     logs.txt      task1.yaml
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  apply -f  auotpod.json 
+pod/ashupod2 created
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  po 
+NAME        READY   STATUS    RESTARTS   AGE
+ashupod2    1/1     Running   0          7s
+
+```
+
+### creating web app pod 
+
+```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ashuwebpod1
+  name: ashuwebpod1
+spec:
+  containers:
+  - image: dockerashu/nginx:5thoct2021
+    name: ashuwebpod1
+    ports:
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml   >ashunginx.yaml
+ 
+ ```
+ 
+ 
