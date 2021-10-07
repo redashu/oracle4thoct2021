@@ -285,4 +285,43 @@ status: {}
  
  ```
  
+ ### accessing application using kubectl client 
  
+ ```
+ ✘ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  port-forward  ashuwebpod1  1122:80
+Forwarding from 127.0.0.1:1122 -> 80
+Forwarding from [::1]:1122 -> 80
+Handling connection for 1122
+Handling connection for 1122
+Handling connection for 1122
+Handling connection for 1122
+Handling connection for 1122
+Handling connection for 1122
+
+```
+
+### Intro to Internal load balancer in k8s minion side
+
+<img src="lb.png">
+
+###  LB understanding 
+
+<img src="lbb.png">
+
+### service / LB will be using label of pods to find pod and send traffic 
+
+<img src="lbsvc.png">
+
+
+### to access app from outside we are using Node port and Loadbalancer service 
+
+
+<img src="svcv.png">
+
+### Nodeport service 
+
+
+```
+
+
+
