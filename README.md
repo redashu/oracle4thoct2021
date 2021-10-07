@@ -165,6 +165,28 @@ BUG_REPORT_URL="https://bugs.alpinelinux.org/"
 / # exit
 
 ```
+## POD command history 
 
+```
+ 5194  kubectl  apply  -f  ashupod1.yaml  --dry-run=client 
+ 5195  kubectl  apply  -f  ashupod1.yaml  
+ 5196  kubectl   get  pods
+
+ 5204  kubectl   get  po  ashupod1  -o wide
+ 5205  kubectl   get  po   -o wide
+ 5206  kubectl  describe  pod ashupod1 
+ 5212  kubectl  logs  -f  ashupod1  
+ 5213  history
+ 5214  kubectl  delete pod  ashupod1
+ 5215  kubectl  get  no
+ 5216  kubectl  apply -f  ashupod1.yaml
+ 5217  kubectl   get  po  ashupod1  -o wide
+ 5218  kubectl  logs  -f  ashupod1  
+ 5219  history
+ 5220  kubectl  exec  -it  ashupod1  -- sh 
+ 
+ ```
+ 
+ 
 
 
