@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: ashuwebpod1
+  name: ashuwebpod1 # name of POD 
+spec:
+  containers:
+  - image: dockerashu/nginx:5thoct2021 # docker hub image
+    name: ashuwebpod1 # name of container 
+    ports: # nginx app server default port  optional field these days 
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

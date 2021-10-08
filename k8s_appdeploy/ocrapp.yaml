@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ name: ashurc-1  # name of RC 
+spec: 
+ replicas: 1 # number of pod we want first time 
+ template: # by using template RC will be creating POD 
+  metadata:
+   labels:
+    x: helloashuapp 
+  spec: 
+   imagePullSecrets: # to access the secret for pulling docker image 
+   - name: ashusec1 # name of secret 
+   containers:
+   - name: ashuc1 
+     image: phx.ocir.io/axmbtg8judkl/webapp:v1
+     ports:
+     - containerPort: 80 
