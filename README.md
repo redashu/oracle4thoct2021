@@ -328,3 +328,89 @@ default-token-9j5cc   kubernetes.io/service-account-token   3      112m
 ```
 
 
+### Intro to deployments
+
+<img src="dep.png">
+
+```
+ 5450  kubectl  create  deployment  ashudep1  --image=dockerashu/nginx:5thoct2021   --dry-run=client  -o yaml 
+ 5451  kubectl  create  deployment  ashudep1  --image=dockerashu/nginx:5thoct2021   --dry-run=client  -o yaml  >ashuwebdep.yaml
+```
+
+### creating LB type service 
+
+```
+lobal command-line options (applies to all commands).
+ ✘ fire@ashutoshhs-MacBook-Air  ~  kubectl  create  service   loadbalancer  ashulbsvc --tcp  1234:80 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ashulbsvc
+  name: ashulbsvc
+spec:
+  ports:
+  - name: 1234-80
+    port: 1234
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: ashulbsvc
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+
+
+```
+
+### deploying deployment 
+
+```
+kubectl  apply -f  ashuwebdep.yaml 
+deployment.apps/ashudep1 created
+service/ashulbsvc created
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  deployments 
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep1   1/1     1            1           12s
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  deploy      
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+ashudep1   1/1     1            1           17s
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  rs    
+NAME                  DESIRED   CURRENT   READY   AGE
+ashudep1-657d76cd65   1         1         1       23s
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  po
+NAME                        READY   STATUS    RESTARTS   AGE
+ashudep1-657d76cd65-vqzz2   1/1     Running   0          29s
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  svc
+NAME        TYPE           CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+ashulbsvc   LoadBalancer   10.96.129.97   <pending>     1234:30791/TCP   81s
+
+```
+
+### scaling pod manually 
+
+```
+ kubectl  scale deployment  ashudep1  --replicas=3
+deployment.apps/ashudep1 scaled
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  po                                 
+NAME                        READY   STATUS    RESTARTS   AGE
+ashudep1-657d76cd65-52jkd   1/1     Running   0          3s
+ashudep1-657d76cd65-vqzz2   1/1     Running   0          4m18s
+ashudep1-657d76cd65-wjdcn   1/1     Running   0          3s
+
+```
+
+### End to End app deploy with Network understanding 
+
+<img src="appfinal.png">
+
+### Loadbalancer and Nodeport service 
+
+<img src="lbnp.png">
+
