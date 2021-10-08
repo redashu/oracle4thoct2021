@@ -54,4 +54,38 @@
    ```
    
    
+### checking number of cluster that client machine can connect 
+
+### listing and switching 
+
+```
+fire@ashutoshhs-MacBook-Air  ~  kubectl   config  get-contexts 
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~                     
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  config  use-context  kubernetes-admin@kubernetes
+Switched to context "kubernetes-admin@kubernetes".
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  kubectl   config  get-contexts                           
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  get  nodes                                      
+NAME            STATUS   ROLES                  AGE     VERSION
+control-plane   Ready    control-plane,master   2d2h    v1.22.2
+minion-node1    Ready    <none>                 2d2h    v1.22.2
+minion-node2    Ready    <none>                 2d2h    v1.22.2
+minion3         Ready    <none>                 3m51s   v1.22.2
+
+```
+
+### K8s revision 
+
+<img src="rev.png">
+
+
 
