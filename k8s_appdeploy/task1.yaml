@@ -1,0 +1,10 @@
+apiVersion: v1 # apiserver version to send request 
+kind: Pod # pod kind request we are sending 
+metadata: # info about POD 
+ name: ashutoshhpod1 
+spec:  # POd component Design  
+ containers: # just container info 
+ - name: ashuc1 # name of container 
+   image: busybox # docker image from docker hub 
+   command: ["sh","-c","ping fb.com"] # process of container
+   # Command will replace entrypoint process by dockerfile 
