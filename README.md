@@ -414,3 +414,86 @@ ashudep1-657d76cd65-wjdcn   1/1     Running   0          3s
 
 <img src="lbnp.png">
 
+
+### dashboard. deployment in k8s 
+
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
+namespace/kubernetes-dashboard created
+serviceaccount/kubernetes-dashboard created
+service/kubernetes-dashboard created
+secret/kubernetes-dashboard-certs created
+secret/kubernetes-dashboard-csrf created
+secret/kubernetes-dashboard-key-holder created
+configmap/kubernetes-dashboard-settings created
+role.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrole.rbac.authorization.k8s.io/kubernetes-dashboard created
+rolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+clusterrolebinding.rbac.authorization.k8s.io/kubernetes-dashboard created
+deployment.apps/kubernetes-dashboard created
+service/dashboard-metrics-scraper created
+Warning: spec.template.metadata.annotations[seccomp.security.alpha.kubernetes.io/pod]: deprecated since v1.19; use the "seccompProfile" field instead
+deployment.apps/dashboard-metrics-scraper created
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  get  ns
+
+
+```
+
+### changing service type 
+
+```
+fire@ashutoshhs-MacBook-Air  ~  kubectl  get  pod -n kubernetes-dashboard
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-856586f554-llq2w   1/1     Running   0          51s
+kubernetes-dashboard-67484c44f6-q56lm        1/1     Running   0          52s
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  get  svc -n kubernetes-dashboard 
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+dashboard-metrics-scraper   ClusterIP   10.102.118.170   <none>        8000/TCP   68s
+kubernetes-dashboard        ClusterIP   10.109.2.131     <none>        443/TCP    76s
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  edit  svc    kubernetes-dashboard        -n kubernetes-dashboard 
+service/kubernetes-dashboard edited
+ fire@ashutoshhs-MacBook-Air  ~  
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  get  svc -n kubernetes-dashboard                                 
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+dashboard-metrics-scraper   ClusterIP   10.102.118.170   <none>        8000/TCP        2m5s
+kubernetes-dashboard        NodePort    10.109.2.131     <none>        443:30563/TCP   2m13s
+
+```
+
+### gettting token of service account in k8s namespace
+
+```
+kubectl  get  serviceaccount  -n  kubernetes-dashboard
+NAME                   SECRETS   AGE
+default                1         5m55s
+kubernetes-dashboard   1         5m54s
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  get  secret  -n  kubernetes-dashboard
+NAME                               TYPE                                  DATA   AGE
+default-token-qsjm5                kubernetes.io/service-account-token   3      6m8s
+kubernetes-dashboard-certs         Opaque                                0      6m5s
+kubernetes-dashboard-csrf          Opaque                                1      6m5s
+kubernetes-dashboard-key-holder    Opaque                                2      6m4s
+kubernetes-dashboard-token-29fxh   kubernetes.io/service-account-token   3      6m7s
+ fire@ashutoshhs-MacBook-Air  ~  kubectl  describe   secret  kubernetes-dashboard-token-29fxh  -n  kubernetes-dashboard
+Name:         kubernetes-dashboard-token-29fxh
+Namespace:    kubernetes-dashboard
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: kubernetes-dashboard
+              kubernetes.io/service-account.uid: b6ca3aff-34a7-4de7-9a24-3962a08700f8
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+namespace:  20 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Ik1DQzhVbDFzYUNab2dxcG85MVd1dk51Zjl1eFZOaGZwRFRLTWYtWkdjNDAifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZC10b2tlbi0yOWZ4aCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50Lm5hbWUiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIs
+
+```
+
+### dashboard link 
+
+[Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
+
