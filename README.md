@@ -87,5 +87,77 @@ minion3         Ready    <none>                 3m51s   v1.22.2
 
 <img src="rev.png">
 
+## Intro to namespace in k8s
+
+<img src="ns.png">
+
+### list of namespace 
+
+```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl   get  namespaces 
+NAME              STATUS   AGE
+default           Active   2d3h
+kube-node-lease   Active   2d3h
+kube-public       Active   2d3h
+kube-system       Active   2d3h
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  pods
+No resources found in default namespace.
+
+```
+
+### k8s internal components are running here
+
+```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl get  po  -n  kube-system 
+NAME                                       READY   STATUS    RESTARTS      AGE
+calico-kube-controllers-75f8f6cc59-8rp9w   1/1     Running   3 (17h ago)   2d3h
+calico-node-5qbfh                          1/1     Running   3 (17h ago)   2d3h
+calico-node-7sgrt                          1/1     Running   0             22m
+calico-node-d7pfx                          1/1     Running   3 (17h ago)   2d3h
+calico-node-g7vcl                          1/1     Running   3 (17h ago)   2d3h
+coredns-78fcd69978-nvzkn                   1/1     Running   3 (17h ago)   2d3h
+coredns-78fcd69978-tw2bp                   1/1     Running   3 (17h ago)   2d3h
+etcd-control-plane                         1/1     Running   3 (17h ago)   2d3h
+kube-apiserver-control-plane               1/1     Running   3 (17h ago)   2d3h
+kube-controller-manager-control-plane      1/1     Running   3 (17h ago)   2d3h
+kube-proxy-5csrx                           1/1     Running   3 (17h ago)   2d3h
+kube-proxy-6b7ff                         
+
+```
+
+### creating namespaces 
+
+```
+fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  create  namespace  ashu-devenv 
+namespace/ashu-devenv created
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get  ns                        
+NAME              STATUS   AGE
+ashu-devenv       Active   4s
+
+```
+
+### changing default namespace 
+
+```
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get   pods
+No resources found in default namespace.
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  config set-context --current --namespace=ashu-devenv 
+Context "kubernetes-admin@kubernetes" modified.
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  
+ fire@ashutoshhs-MacBook-Air  ~/Desktop/k8s_appdeploy  kubectl  get   podsNo resources found in ashu-devenv namespace.
+ 
+```
+
+### checking default namespace 
+
+```
+kubectl config get-contexts 
+CURRENT   NAME                          CLUSTER      AUTHINFO           NAMESPACE
+*         kubernetes-admin@kubernetes   kubernetes   kubernetes-admin   ashu-devenv
+
+```
+
 
 
